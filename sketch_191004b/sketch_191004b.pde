@@ -1,10 +1,19 @@
 FractalRoot pentagon;
+int numSides = 4;
 float sf = 0.15;
-int maxLevels = 3;
+float sn;
+int maxLevels = 2;
 
 void setup() {
   size(1000, 1000);
-  pentagon = new FractalRoot();
+  sn = random(10);
+}
+
+void draw(){
+  background(255);
+  sn += 0.01;
+  sf = noise(sn) * 3 - 1;
+  pentagon = new FractalRoot(frameCount);
   pentagon.drawShape();
 }
 
@@ -17,16 +26,17 @@ class PointObj {
 }
 
 class FractalRoot {
-  PointObj[] pointArr = new PointObj[5];
+  PointObj[] pointArr = new PointObj[numSides];
   Branch rootBranch;
 
-  FractalRoot() {
+  FractalRoot(float startAngle) {
     float cx = width/2;
     float cy = height/2;
     int count = 0;
-    for (int i=0; i<360; i+=72) {
-      float x = cx + 400*cos(radians(i));
-      float y = cy + 400*sin(radians(i));
+    float angleStep = 360.0/numSides;
+    for (int i=0; i<360; i+=angleStep) {
+      float x = cx + 400*cos(radians(startAngle+i));
+      float y = cy + 400*sin(radians(startAngle+i));
       pointArr[count] = new PointObj(x, y);
       count++;
     }
@@ -73,9 +83,9 @@ class Branch {
     strokeWeight(0.5);
     fill(255, 150);
     for (int i = 0; i< midPoints.length; i++) {
-      ellipse(midPoints[i].x, midPoints[i].y, 15, 15);
+      ellipse(midPoints[i].x, midPoints[i].y, 5, 5);
       line(midPoints[i].x, midPoints[i].y, projPoints[i].x, projPoints[i].y);
-      ellipse(projPoints[i].x, projPoints[i].y, 15, 15);
+      ellipse(projPoints[i].x, projPoints[i].y, 5, 5);
     }
 
     for (Branch b : children) {
