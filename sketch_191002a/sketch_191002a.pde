@@ -1,16 +1,18 @@
 int numChildren = 3;
-int maxLevels = 4;
+int maxLevels = 10;
 
 Branch trunk;
 
 void setup() {
-  size(750, 500);
+  size(750, 500, P2D);
+  //frameRate(2);
   background(255);
   noFill();
   newTree();
 }
 
 void draw() {
+  println(frameRate);
   background(255);
   trunk.updateMe(width/2, height/2);
   trunk.drawMe();
