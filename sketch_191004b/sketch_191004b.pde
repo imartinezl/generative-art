@@ -51,9 +51,15 @@ class Branch {
     points = p;
     midPoints = calcMidPoints();
     projPoints = calcProjPoints();
-    
-    if(level + 1 < maxLevels){
+
+    if (level + 1 < maxLevels) {
       children.add(new Branch(level+1, 0, projPoints));
+      for (int i = 0; i< points.length; i++) {
+        int nexti = i-1;
+        if (nexti<0) nexti+= points.length;
+        PointObj[] newPoints = { projPoints[i], midPoints[i], points[i], midPoints[nexti], projPoints[nexti] };
+        children.add(new Branch(level+1, i+1, newPoints));
+      }
     }
   }
 
@@ -71,8 +77,8 @@ class Branch {
       line(midPoints[i].x, midPoints[i].y, projPoints[i].x, projPoints[i].y);
       ellipse(projPoints[i].x, projPoints[i].y, 15, 15);
     }
-    
-    for(Branch b: children){
+
+    for (Branch b : children) {
       b.drawMe();
     }
   }
