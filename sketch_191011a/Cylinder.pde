@@ -1,18 +1,19 @@
 class Cylinder {
-  float r, h, x0, y0;
+  float r, h, offset;
   PVector p;
 
-  Cylinder(PVector p_, float r_, float h_) {
+  Cylinder(PVector p_, float r_, float h_, float offset_) {
     r = r_;
     h = h_;
     p = p_;
+    offset = offset_;
 
   }
   
   void update(float angle){
     pushMatrix();
     translate(p.x, p.y, p.z);
-    rotateX(angle);
+    rotateX(angle + offset);
     this.display();
     popMatrix();
   }
