@@ -1,11 +1,12 @@
 
-
-
 float angle = 0.0;
 float r = 25;
 float h = 60;
 int np = 50;
 float theta_step = TWO_PI/np;
+
+color[] colors = {#ebcfb2, #424b54, #b38d97};
+color c = colors[0];
 
 
 ArrayList<Cylinder> cs = new ArrayList<Cylinder>();
@@ -14,7 +15,7 @@ int ny = 10;
 
 void setup() {
   size(600, 600, P3D);
-  background(255);
+  background(c);
   ortho();
 
   float sx = width/nx;
@@ -26,13 +27,13 @@ void setup() {
       if ((i+j) % 2 == 0) {
         offset = PI/2;
         PVector p = new PVector(i*sx+sx/2, j*sy+sy/2, 0);
-        cs.add(new Cylinder(p, r, h, offset));
+        cs.add(new Cylinder(p, r, h, offset, colors));
       }
     }
   }
 }
 
-color c = color(#b38d97);
+
 
 void draw() {
   background(c);
@@ -41,10 +42,11 @@ void draw() {
   }
   angle += PI/100;
   if(angle > PI){
-   c = color(#ebcfb2);
+   //c = colors[1];
   }
   if(angle > TWO_PI){
-   c = color(#b38d97);
+   c = colors[0];
    angle = 0;
   }
+  saveFrame("figures/figure_#####.png");
 }
