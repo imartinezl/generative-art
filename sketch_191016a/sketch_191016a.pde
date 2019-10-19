@@ -1,10 +1,10 @@
  //<>// //<>//
-BinaryTree fractal = new BinaryTree(200);
+//BinaryTree fractal = new BinaryTree(200);
+Cantor fractal = new Cantor(400, 40);
 
 void setup() {
 
   size(400, 400);
-  background(255);  
   fractal.display();
 }
 
@@ -22,11 +22,11 @@ String it(String axiom) {
 }
 
 int n = 0;
-int nmax = 10;
+int nmax = 6;
 
 void draw() {
   frameRate(5);
-  background(255);
+
   fractal.axiom = it(fractal.axiom);
   fractal.display();
   

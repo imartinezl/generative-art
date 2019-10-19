@@ -17,6 +17,7 @@ class BinaryTree {
     }
   }
   void display() {
+    background(255);
     translate(width/2, height);
     for (char c : axiom.toCharArray()) {
       if (c == '0') {
