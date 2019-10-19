@@ -1,6 +1,7 @@
  //<>// //<>//
 //BinaryTree fractal = new BinaryTree(200);
-Cantor fractal = new Cantor(400, 40);
+//Cantor fractal = new Cantor(400, 40);
+Koch fractal = new Koch(30);
 
 void setup() {
 
@@ -22,7 +23,7 @@ String it(String axiom) {
 }
 
 int n = 0;
-int nmax = 6;
+int nmax = 5;
 
 void draw() {
   frameRate(5);

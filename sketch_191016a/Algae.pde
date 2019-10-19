@@ -2,8 +2,8 @@ class Algae {
 
   String axiom = "A";
   
-  Algae(String axiom_) {
-    axiom = axiom_;
+  Algae() {
+    
   }
 
   String rule(char c) {
