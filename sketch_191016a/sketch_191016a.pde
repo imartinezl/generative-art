@@ -1,38 +1,37 @@
-
+ //<>// //<>//
+BinaryTree fractal = new BinaryTree(200);
 
 void setup() {
-  
 
-  
-  println(axiom);
-  String result = it(axiom);
-  println(result);
-  
-
+  size(400, 400);
+  background(255);  
+  fractal.display();
 }
 
-String it(String axiom){
+String it(String axiom) {
   ArrayList<String> str = new ArrayList<String>();
-  for(char c: axiom.toCharArray()){
-    if(c == 'A'){
-      str.add("AB");
-    }else if(c == 'B'){
-      str.add("A");
-    }
+  for (char c : axiom.toCharArray()) {
+    str.add(fractal.rule(c));
   }
   String result = "";
   for (String s : str)
   {
-      result += s;
+    result += s;
   }
   return result;
 }
 
-String axiom = "A";
+int n = 0;
+int nmax = 10;
+
 void draw() {
+  frameRate(5);
+  background(255);
+  fractal.axiom = it(fractal.axiom);
+  fractal.display();
   
-  frameRate(1);
-  axiom = it(axiom);
-  println(axiom);
-  
+  n++;
+  if (n > nmax) {
+    noLoop();
+  }
 }
