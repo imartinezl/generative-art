@@ -6,7 +6,8 @@
 //Sierpinski fractal = new Sierpinski(400, 120);
 //Sierpinski2 fractal = new Sierpinski2(400, 60);
 //Dragon fractal = new Dragon(400, 90);
-Plant fractal = new Plant(150, 25);
+//Plant fractal = new Plant(150, 25);
+Hilbert fractal = new Hilbert(400, 90);
 
 void setup() {
 
