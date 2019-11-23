@@ -23,7 +23,7 @@ class Curve {
     line(py.x, px.y, py.x, py.y);
 
     // Draw curve
-    stroke(255,0,0);
+    stroke(0,0,0);
     beginShape();
     for (PVector p : path) {
       vertex(p.x, p.y);

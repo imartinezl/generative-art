@@ -1,29 +1,31 @@
 class Circle {
 
-  float t=0, dt;
   PVector p0, p;
-  float rc, fc, ac, rot;
+  float t=0, dt, radius, freq, phase, rot;
   ArrayList<PVector> path = new ArrayList<PVector>();
 
   boolean hasChild;
   Circle child;
 
-  Circle(float[][] X, float rot) {
-    rc = X[0][0];
-    fc = X[1][0];
-    ac = X[2][0];
+  Circle(float[][] data, float rot_, float n) {
+        
+    radius = data[0][0];
+    freq = data[1][0];
+    phase = data[2][0];
+    rot = rot_;
+    dt = 1/n;
 
     p0 = new PVector();
     p = new PVector();
-    int n = X[0].length;
+    int m = data[0].length;
     
-    X[0] = subset(X[0],1);
-    X[1] = subset(X[1],1);
-    X[2] = subset(X[2],1);
+    data[0] = subset(data[0],1);
+    data[1] = subset(data[1],1);
+    data[2] = subset(data[2],1);
 
-    hasChild = n > 1;
+    hasChild = m > 1;
     if (hasChild) {
-      child = new Circle(X, rot);
+      child = new Circle(data, rot, n);
     }
   }
 
@@ -38,10 +40,10 @@ class Circle {
 
   void update() {
     p = new PVector();
-    float phi = fc*t + ac + rot;
-    p.x = p0.x + rc*cos(phi);
-    p.y = p0.y + rc*sin(phi);
-    t = t + 0.002;
+    float phi = TWO_PI*freq*t + phase + rot;
+    p.x = p0.x + radius*cos(phi);
+    p.y = p0.y + radius*sin(phi);
+    t = t + dt;
   }
 
   PVector getPos() {
@@ -61,7 +63,7 @@ class Circle {
     if (drawCircles) {
       noFill();
       stroke(0, 0, 0, 80);
-      circle(p0.x, p0.y, rc*2);
+      circle(p0.x, p0.y, radius*2);
       circle(p.x, p.y, 10);
       line(p0.x, p0.y, p.x, p.y);
     }
