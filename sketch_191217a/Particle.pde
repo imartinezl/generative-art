@@ -4,7 +4,7 @@ class Particle{
   Particle(PVector pos_initial){
    pos = pos_initial;
    prev_pos = pos.copy();
-   vel = PVector.random2D().mult(2);
+   vel = PVector.random2D().mult(4);
    acc = new PVector(0,0);
   }
   
@@ -19,18 +19,18 @@ class Particle{
     PVector force = PVector.sub(target, pos);
     float d = force.mag();
     d = constrain(d, 1, 25);
-    float G = 1;
+    float G = 25;
     float strength = G/(d*d);
     force.setMag(strength);
     if (d < 20) {
-      force.mult(-10);
+      force.mult(-100);
     }
     acc.add(force);
   }
   
   void display(){
    
-    stroke(0, 0, 0, 10);
+    stroke(0, 0, 0, 80);
     noFill();
     //point(pos.x, pos.y);
     strokeWeight(0.5);
