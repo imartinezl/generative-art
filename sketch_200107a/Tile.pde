@@ -1,17 +1,28 @@
 class Tile {
   PVector pos, shp;
-  int type;
+  int type; 
+  boolean hasType = false;
   float angle;
-  color cArc, cRect, ca = color(255), cb = color(0);
+  color cArc, cRect, ca = color(50), cb = color(255);
 
-  Tile(PVector pos_, PVector shp_, int type_) {
+  Tile(PVector pos_, PVector shp_) {
     pos = pos_;
     shp = shp_;
-    type = type_;
-    init();
   }
 
-  void init() {
+  void setType(int type_) {
+    type = type_;
+    hasType = true;
+  }
+  
+  int getType(){
+    return type;
+  }
+  
+  void init(){
+    cArc = ca;
+    cRect = cb;
+    angle = 0;
     switch(type) {
     case 0: 
       cArc = ca;
@@ -34,6 +45,7 @@ class Tile {
       angle = PI/2;
       break;
     }
+    
   }
 
   void display() {
