@@ -1,11 +1,11 @@
-class Tile {
+class SmithTile {
   PVector pos, shp;
   int type; 
   boolean hasType = false;
   float angle;
   color cArc, cRect, ca = color(50), cb = color(255);
 
-  Tile(PVector pos_, PVector shp_) {
+  SmithTile(PVector pos_, PVector shp_) {
     pos = pos_;
     shp = shp_;
   }

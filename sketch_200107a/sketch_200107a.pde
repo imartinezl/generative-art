@@ -1,5 +1,5 @@
  //<>//
-ArrayList<Tile> tiles = new ArrayList<Tile>();
+ArrayList<SmithTile> tiles = new ArrayList<SmithTile>();
 int n = 30, nx, ny;
 
 void setup() {
@@ -15,7 +15,7 @@ void setup() {
     for (int j=0; j<ny; j++) {
       PVector pos = new PVector(i*sx+sx/2, j*sy+sy/2);
       PVector shp = new PVector(sx, sy);
-      tiles.add(new Tile(pos, shp));
+      tiles.add(new SmithTile(pos, shp));
     }
   }
   for (int k=0; k<tiles.size(); k++) {
@@ -26,21 +26,22 @@ void setup() {
 void draw() {
   background(255);
   //frameRate(10);
-  for(int i=0; i<10; i++){
+  for(int i=0; i<random(100); i++){
     assignType(floor(random(n*n)));
   }
-  for (Tile t : tiles) {
+  for (SmithTile t : tiles) {
     t.init();
     t.display();
   }
+  //saveFrame("figures/figure_######.png");
 }
 
 void assignType(int k) {
-  Tile t = tiles.get(k);
+  SmithTile t = tiles.get(k);
   IntList neighbors = getNeighbors(k, nx, ny);
   IntList neighborsType = new IntList();
   for (int neighborIndex : neighbors) {
-    Tile neighbor = tiles.get(neighborIndex);
+    SmithTile neighbor = tiles.get(neighborIndex);
     if (neighbor.hasType) {
       neighborsType.append(neighbor.type);
     }
