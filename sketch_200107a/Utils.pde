@@ -5,7 +5,7 @@ PVector index2grid(int index, int nx, int ny) {
 int grid2index(PVector pos, int nx, int ny) {
   return int(pos.x*ny + pos.y);
 }
-IntList neighbors(int index, int nx, int ny) {
+IntList getNeighbors(int index, int nx, int ny) {
   PVector pos = index2grid(index, nx, ny);
   IntList neighbors = new IntList();
   for (int i=-1; i<=1; i++) {
@@ -22,4 +22,24 @@ IntList neighbors(int index, int nx, int ny) {
     }
   }
   return neighbors;
+}
+
+
+boolean rejectType(int type, IntList neighborsType) {
+  boolean reject = false;
+  switch(type) {
+  case 0: 
+    reject = neighborsType.hasValue(3) || neighborsType.hasValue(0);
+    break;
+  case 1: 
+    reject = neighborsType.hasValue(2) || neighborsType.hasValue(1);
+    break;
+  case 2:
+    reject = neighborsType.hasValue(1) || neighborsType.hasValue(2);
+    break;
+  case 3:
+    reject = neighborsType.hasValue(0) || neighborsType.hasValue(3);
+    break;
+  }
+  return reject;
 }
