@@ -3,17 +3,22 @@ void setup() {
 
   background(200);
 
-  PVector pos = new PVector(300, 300);
-  PVector shp = new PVector(200, 200);
 
-  noFill();
-  rectMode(CENTER);
-  rect(pos.x, pos.y, shp.x, shp.y);
+  float nx = 3;
+  float ny = 3;
+  float sx = width/nx;
+  float sy = height/ny;
 
-  fill(255, 0, 0);
-  noFill();
-  stroke(0);
-  ellipseMode(CENTER);
-  arc(pos.x-shp.x/2, pos.y+shp.y/2, shp.x, shp.y, -PI/2, 0, OPEN);
-  arc(pos.x+shp.x/2, pos.y-shp.y/2, shp.x, shp.y, PI/2, PI, OPEN);
+  ArrayList<Tile> tiles = new ArrayList<Tile>();
+  for (int i=0; i<nx; i++) {
+    for (int j=0; j<ny; j++) {
+      PVector pos = new PVector(i*sx+sx/2, j*sy+sy/2);
+      PVector shp = new PVector(200, 200);
+      tiles.add(new Tile(pos, shp));
+    }
+  }
+  
+  for(Tile t: tiles){
+    t.display();
+  }
 }
