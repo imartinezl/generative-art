@@ -1,17 +1,17 @@
-void setup() { //<>//
-  size(1000, 1000);
+ //<>//
+ArrayList<Tile> tiles = new ArrayList<Tile>();
+int n = 10, nx, ny;
+void setup() {
+  size(600, 600);
+  background(255);
 
-  background(200);
 
-
-  int n = 50;
-  int nx = n;
-  int ny = n;
+  nx = n;
+  ny = n;
   float sx = width/nx;
   float sy = height/ny;
 
 
-  ArrayList<Tile> tiles = new ArrayList<Tile>();
   for (int i=0; i<nx; i++) {
     for (int j=0; j<ny; j++) {
       PVector pos = new PVector(i*sx+sx/2, j*sy+sy/2);
@@ -19,9 +19,22 @@ void setup() { //<>//
       tiles.add(new Tile(pos, shp));
     }
   }
+  
+  assignType();
+}
 
+void draw(){
+  background(255);
+  frameRate(1);
+  assignType();
+  for(Tile t: tiles){
+    t.init();
+    t.display();
+  }
+}
 
-  for (int k=0; k<tiles.size(); k++) {
+void assignType(){
+   for (int k=0; k<tiles.size(); k++) {
     Tile t = tiles.get(k);
     IntList neighbors = getNeighbors(k, nx, ny);
     IntList neighborsType = new IntList();
@@ -36,8 +49,5 @@ void setup() { //<>//
       type = floor(random(4));
     }
     t.setType(type);
-    t.init();
-    t.display();
   }
-
 }
