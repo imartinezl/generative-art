@@ -21,19 +21,25 @@ void setup() {
   for (int k=0; k<tiles.size(); k++) {
     assignType(k);
   }
+  
+  
 }
 
 void draw() {
   background(255);
   //frameRate(10);
-  for(int i=0; i<random(100); i++){
-    assignType(floor(random(n*n)));
+  float nAssign = random(n);
+  for(int i=0; i<nAssign; i++){
+    int k = floor(random(n*n));
+    assignType(k);
   }
   for (SmithTile t : tiles) {
     t.init();
     t.display();
   }
-  //saveFrame("figures/figure_######.png");
+  saveFrame("figures/figure_######.png");
+  typeCounts();
+  
 }
 
 void assignType(int k) {
@@ -51,4 +57,19 @@ void assignType(int k) {
     type = floor(random(4));
   }
   t.setType(type);
+}
+
+
+
+void typeCounts(){
+  HashMap<Integer,Integer> hm = new HashMap<Integer,Integer>();
+  for (SmithTile t : tiles) {
+    int type = t.getType();
+    if(hm.get(type) == null){
+      hm.put(type, 1);
+    }else{
+      hm.put(type, hm.get(type) + 1);
+    }
+  }
+  println(hm);
 }
