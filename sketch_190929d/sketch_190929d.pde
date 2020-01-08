@@ -2,7 +2,7 @@ float xstart, xnoise, ystart, ynoise;
 float xstartnoise, ystartnoise;
 
 void setup() {
-  size(300, 300);
+  size(600, 600);
   background(0);
   frameRate(24);
 
@@ -33,6 +33,8 @@ void draw() {
   ystart += map(noise(ystartnoise), 0, 1, -0.25, 0.25);
   xstartnoise += 0.01;
   ystartnoise += 0.01;
+  
+  saveFrame("figures/figure_######.png");
 }
 
 
