@@ -15,13 +15,12 @@ void setup() {
   for (int i=0; i < nx; i++) {
     for (int j=0; j < ny; j++) {
       //if ( (i+j) % 2 == 0) {
-        float px = i*sx + sx/2;
-        float py = j*sy + sy/2;
-        lines.add(new Line(px, py, r));
+      float px = i*sx + sx/2;
+      float py = j*sy + sy/2;
+      lines.add(new Line(px, py, r));
       //}
     }
   }
-
 
 
   //p = new Line(250, 250, 100);
@@ -33,4 +32,5 @@ void draw() {
     p.update();
     p.display();
   }
+  saveFrame("figures/figure_#####.png");
 }
