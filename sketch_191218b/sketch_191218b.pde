@@ -21,4 +21,5 @@ void draw() {
     p.neighbors(particles);
     p.display();
   }
+  saveFrame("figures/figure_#####.png");
 }
