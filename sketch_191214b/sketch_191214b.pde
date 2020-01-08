@@ -22,4 +22,5 @@ void draw() {
     p.update();
     p.display();
   }
+  saveFrame("figures/figure_#####.png");
 }
