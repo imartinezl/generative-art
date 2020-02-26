@@ -18,16 +18,7 @@ class Point implements Comparable<Point> {
     stroke(0, 0, 0, 50);
     point(x, y);
   }
-  
-  void display_line(Point p){
-    strokeWeight(1);
-    stroke(255, 0, 0, 50);
-    if (this.id == p.id) {
-      line(p.x, p.y, this.x, this.y);
-    }
-  }
-  
-  
+
 
   @Override
     int compareTo(Point other) {
