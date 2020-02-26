@@ -111,7 +111,7 @@ data %>%
                 y = scales::rescale(coords.x2),
                 id = as.numeric(id)
   ) %>% 
-  dplyr::filter(id %in% seq(1,20000)) %>%
+  dplyr::filter(id %in% seq(1,60000)) %>%
   dplyr::mutate(ts_date = as.POSIXct(date, format="%Y-%m-%dT%H:%M:%S")) %>% 
   dplyr::group_by(id) %>% 
   dplyr::mutate(ts_num = as.numeric(ts_date) + sec + round(runif(1,0,3600))) %>%
@@ -119,7 +119,7 @@ data %>%
   dplyr::mutate(date = as.POSIXct(ts_num, origin="1970-01-01")) %>% 
   dplyr::arrange(ts_num) %>% 
   dplyr::select(id,x,y,date,ts_num) %>% 
-  write.csv(file="temp.csv", row.names = F)
+  write.csv(file="gps_path.csv", row.names = F)
 
 freq <- 5*60
 data %>% 
@@ -135,6 +135,7 @@ data %>%
   dplyr::group_by(new_date) %>% 
   dplyr::summarise(count = length(unique(id))) %>% 
   dplyr::ungroup() %>% 
+  write.csv(file="temp.csv", row.names = F)
   ggplot2::ggplot()+
   ggplot2::geom_line(ggplot2::aes(x=new_date, y=count))
 
