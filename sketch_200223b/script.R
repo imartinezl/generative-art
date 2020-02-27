@@ -81,6 +81,8 @@ while(T){
   }
 }
 
+d %>% saveRDS('backup.rds')
+
 data <- d %>% 
   dplyr::bind_rows(.id = "id") %>% 
   dplyr::filter(
@@ -119,7 +121,7 @@ data %>%
   dplyr::mutate(date = as.POSIXct(ts_num, origin="1970-01-01")) %>% 
   dplyr::arrange(ts_num) %>% 
   dplyr::select(id,x,y,date,ts_num) %>% 
-  write.csv(file="gps_path.csv", row.names = F)
+  write.csv(file="bikes_path.csv", row.names = F)
 
 freq <- 5*60
 data %>% 
@@ -129,13 +131,14 @@ data %>%
   dplyr::filter(id %in% seq(1,60000), i == 1) %>% 
   dplyr::mutate(ts_date = as.POSIXct(date, format="%Y-%m-%dT%H:%M:%S"),
                 ts_num = as.numeric(ts_date) + round(runif(n(),0,3600)),
-                ts_num = floor(ts_num/freq)*freq,
-                new_date = as.POSIXct(ts_num, origin="1970-01-01")
+                ts_num = floor(ts_num/freq)*freq
   ) %>% 
-  dplyr::group_by(new_date) %>% 
+  dplyr::group_by(ts_num) %>% 
   dplyr::summarise(count = length(unique(id))) %>% 
   dplyr::ungroup() %>% 
-  write.csv(file="temp.csv", row.names = F)
+  dplyr::arrange(ts_num) %>% 
+  dplyr::mutate(ts_date = as.POSIXct(ts_num, origin="1970-01-01")) %>% 
+  write.csv(file="trips_count.csv", row.names = F)
   ggplot2::ggplot()+
   ggplot2::geom_line(ggplot2::aes(x=new_date, y=count))
 
