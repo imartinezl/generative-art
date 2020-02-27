@@ -4,7 +4,7 @@ class TripCount {
 
   ArrayList<Count> counts = new ArrayList<Count>();
   PVector pos = new PVector(100, height-100);
-  PVector scl = new PVector(0.5, -1);
+  PVector scl = new PVector(1, -1);
 
   TripCount(String file) {
     table = loadTable(file, "header");
@@ -32,23 +32,27 @@ class TripCount {
     line(pos.x, pos.y, pos.x, pos.y - h);
 
 
-    
+
     Count pre = counts.get(0);
     boolean top = false;
     for (Count p : counts) {
       stroke(0);
       strokeWeight(0.1);
-      float s = 0.001;
-      line(pos.x + (t-pre.ts_num)*s, pre.y, pos.x + (t-p.ts_num)*s, p.y);
+      //float s = 0.05;
+      line(pre.x, pre.y, p.x, p.y);
       pre = p;
-      
-      //stroke(255, 0, 0);
-      //strokeWeight(2);
-      //if (p.ts_num > t && !top) {
-      //  //point(p.x, p.y);
-      //  line(p.x, pos.y, p.x, p.y);
-      //  top = true;
-      //}
+
+      stroke(255, 0, 0);
+      strokeWeight(2);
+      if (p.ts_num > t && !top) {
+        //point(p.x, p.y);
+        line(p.x, pos.y, p.x, p.y);
+        top = true;
+      }
+
+      if ((p.ts_num-2*60*60) % (24*60*60) == 0) {
+        text(p.ts_date, p.x, pos.y);
+      }
     }
   }
 }
