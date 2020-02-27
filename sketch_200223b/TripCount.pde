@@ -50,7 +50,7 @@ class TripCount {
         top = true;
       }
 
-      if ((p.ts_num-2*60*60) % (24*60*60) == 0) {
+      if ((p.ts_num+2*60*60) % (24*60*60) == 0) {
         text(p.ts_date, p.x, pos.y);
       }
     }

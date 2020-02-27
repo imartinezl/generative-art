@@ -1,7 +1,7 @@
 class Track {
 
   ArrayList<Point> points = new ArrayList<Point>();
-  int n_max = 20000, chunk = 0, chunk_max = 30;
+  int n_max = 4000, chunk = 0, chunk_max = 20;
   float opacity = 0;
 
   BufferedReader reader;
