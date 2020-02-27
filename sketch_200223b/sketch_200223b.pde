@@ -1,7 +1,8 @@
 import java.util.Collections; //<>//
 
 Track track;
-int t_start, t_step = 1*60;
+TripCount tripcount;
+int t, t_step = 1*60;
 
 void setup() {
   size(800, 800);
@@ -9,18 +10,22 @@ void setup() {
 
   track = new Track("bikes_path.csv");
   track.init();
-  t_start = floor(track.lastTime()/t_step)*t_step;
+  t = floor(track.lastTime()/t_step)*t_step;
+  
+  tripcount = new TripCount("trips_count.csv");
 }
 
 
 void draw() {
   background(255);
-  display_date(t_start);
-  while (track.lastTime() < t_start + t_step) {
+  display_date(t);
+  tripcount.display(t);
+  while (track.lastTime() < t + t_step) {
     track.next();
   }
   track.update();
-  t_start = t_start + t_step;
+  t = t + t_step;
+  println(frameRate);
 }
 
 
