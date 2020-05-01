@@ -1,0 +1,157 @@
+library(dplyr)
+library(mvtnorm)
+library(magrittr)
+
+settings <- function() {
+  println("Set width and height.")
+  #import processing.serial.*;
+  importLibrary("serial")
+  size(1000, 1000)
+}
+
+setup <- function() {
+  background(255)
+  
+  ndim <- 400
+  mean <- rep(0,ndim)
+  sigma <- matrix(nrow=ndim, ncol=ndim)
+  # diag(sigma) <- 1
+
+  v <- 1:ndim
+  i <- matrix(v,nrow=ndim,ncol=ndim,byrow=T)
+  j <- matrix(v,nrow=ndim,ncol=ndim,byrow=F)
+  
+  # gaussian kernel
+  k <- 0.25
+  s <- 20
+  sigma <- (k^2)*exp(-((j-i)^2)/(2*s^2))
+  # periodic kernel
+  #k <- 1
+  #s <- 2
+  #p <- 10
+  #sigma <- (k^2)*exp(-(2*sin(pi*abs(j-i)/p)^2)/(s^2))
+  # linear kernel
+  #b0 <- 1
+  #b1 <- 0.5
+  #b2 <- 0
+  #sigma <- b0^2 + (b1^2)*(j-b2)*(i-b2)
+  
+  df <- t(mvtnorm::rmvnorm(n=2, mean = mean, sigma = sigma))
+  println(c(nrow(df), ncol(df)))
+  #delay(1000)
+}
+
+
+cont <- 1
+row <- 1
+row_step <- 1
+my_list <- list()
+nmax <- 200
+
+phi <- c(pi/2, pi/2)
+x0 <- c(0, 1)
+y0 <- c(0, 0)
+
+x0_step <- 1
+phi_step <- 1
+
+draw <- function(){
+  background(255)
+  # frameRate(20)
+  
+  # x0 <- x0 + c(random(0.001), 0)*x0_step
+  # if(x0[1] > 0.25 || x0[1] < 0) x0_step <- x0_step*(-1)
+  
+  # phi <- phi + c(0, random(0.001))*phi_step
+  # if(phi[2] > 3*pi/4 || phi[2] < pi/2) phi_step <- phi_step*(-1)
+  
+  
+  xA <- mapXToScreen(transformX(df[,1], x0[1], phi[1]))
+  yA <- mapYToScreen(transformY(df[,1], y0[1], phi[1]))
+  xB <- mapXToScreen(transformX(df[,2], x0[2], phi[2]))
+  yB <- mapYToScreen(transformY(df[,2], y0[2], phi[2]))
+  
+  
+  my_list[[cont]] <- c(xA[row], yA[row], xB[row], yB[row])
+  if(length(my_list) >= nmax){
+    my_list[[1]] <- NULL
+  }else{
+    cont <- cont + 1
+  }
+  #println(length(my_list))
+  
+
+  for(i in 1:length(my_list)){
+    stroke(0, map(i, 1, length(my_list), 25, 150))
+    strokeWeight(map(i, 1, length(my_list), 1, 2))
+    strokeWeight(1)
+    line(my_list[[i]][1], my_list[[i]][2], my_list[[i]][3], my_list[[i]][4])
+  }
+  row <- row + row_step
+  if(row >= ndim || row < 1){
+    row_step <- row_step * (-1)
+  }
+  
+  displayLayout <- F
+  if(displayLayout){
+    stroke(255,0,0)
+    strokeWeight(4)
+    # base left
+    displayBaseLine(x0[1], y0[1], phi[1])
+    # base right
+    displayBaseLine(x0[2], y0[2], phi[2])
+    
+    
+    # canvas
+    stroke(0)
+    strokeWeight(1)
+    displayScreen()
+    
+    # stats
+    fill(0)
+    text(round(frameRateVar), 10, 10)
+  }
+    
+
+  saveFrame("figures/fig-######.png")
+}
+
+xMin <- 0
+xMax <- 1
+yMin <- -0.5
+yMax <- 0.5
+uMin <- 0
+uMax <- 1000
+vMin <- 0
+vMax <- 1000
+mapXToScreen <- function(x) {
+  uRatio <- (x - xMin) / (xMax - xMin)
+  return(uMin + uRatio * (uMax - uMin))
+}
+mapYToScreen <- function(y) {
+  vRatio <- (y - yMin) / (yMax - yMin)
+  return(vMin + vRatio * (vMax - vMin))
+}
+
+transformX <- function(r, x0, phi){
+  return(x0 + r*cos(phi))
+}
+
+transformY <- function(r, y0, phi){
+  return(y0 + r*sin(phi))
+}
+
+
+displayScreen <- function(){
+  line(uMin, vMin, uMax, vMin)
+  line(uMin, vMax, uMax, vMax)
+  line(uMin, vMin, uMin, vMax)
+  line(uMax, vMin, uMax, vMax)
+}
+displayBaseLine <- function(x0, y0, phi){
+  xA <- transformX(0, x0, phi)
+  yA <- transformY(0, y0, phi)
+  xB <- transformX(1, x0, phi)
+  yB <- transformY(1, y0, phi)
+  line(mapXToScreen(xA), mapYToScreen(yA), mapXToScreen(xB), mapYToScreen(yB))
+}
