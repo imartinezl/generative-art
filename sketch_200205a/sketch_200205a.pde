@@ -55,4 +55,6 @@ void backnoise() {
   //println(cont);
 
   updatePixels();
+  
+  //saveFrame("figures/fig_#####.jpg");
 }
