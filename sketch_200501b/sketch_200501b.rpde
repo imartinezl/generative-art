@@ -55,7 +55,11 @@ y0 <- c(0, 0)
 x0_step <- 1
 phi_step <- 1
 
+start <- FALSE
+
 draw <- function(){
+  if(mousePressedVar) start <- TRUE
+  if(start){
   background(255)
   # frameRate(20)
   
@@ -92,7 +96,7 @@ draw <- function(){
     row_step <- row_step * (-1)
   }
   
-  displayLayout <- F
+  displayLayout <- FALSE
   if(displayLayout){
     stroke(255,0,0)
     strokeWeight(4)
@@ -113,8 +117,11 @@ draw <- function(){
   }
     
 
-  saveFrame("figures/fig-######.png")
+  #saveFrame("figures/fig-######.jpg")
+  }
 }
+
+
 
 xMin <- 0
 xMax <- 1
