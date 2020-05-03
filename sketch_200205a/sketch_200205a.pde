@@ -1,10 +1,12 @@
 
 float zoff = 0;
 float zstep = 0.01;
-color [] colors = { #ff2e63, #08d9d6, #252a34, #eaeaea, #ffc7c7 }; 
+//color [] colors = { #ff2e63, #08d9d6, #252a34, #eaeaea, #ffc7c7 }; 
+color [] colors = { #3FB8AF,#7FC7AF,#DAD8A7,#FF9E9D,#FF3D7F,#3FB8AF,#7FC7AF,#DAD8A7}; 
 
 void setup() {
   size(600, 600);
+  smooth();
   noiseDetail(2);
   //frameRate(5);
 }
@@ -12,6 +14,7 @@ void setup() {
 void draw() {
   backnoise();
 }
+
 
 void backnoise() {
   loadPixels();
@@ -25,7 +28,7 @@ void backnoise() {
     float yoff = 0;
     for (int y = 0; y < height; y++) {
       int index = x + y*width;
-      float n = noise(xoff, yoff, zoff);
+      float n = noise(xoff+zoff, yoff, zoff);
       //float value = (sin(n) + 1)*0.5*255;
       float value = n*255;
       color c = color(value, 0, 0);
@@ -46,7 +49,7 @@ void backnoise() {
     xoff += xstep;
   }
   zoff += zstep;
-  //if(zoff > 1){
+  //if(zoff > 1 || zoff < 0){
   //  zstep *= -1;
   //}
   //println(cont);
