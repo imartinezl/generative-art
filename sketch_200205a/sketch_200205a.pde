@@ -4,10 +4,13 @@ float zstep = 0.01;
 //color [] colors = { #ff2e63, #08d9d6, #252a34, #eaeaea, #ffc7c7 }; 
 color [] colors = { #3FB8AF,#7FC7AF,#DAD8A7,#FF9E9D,#FF3D7F,#3FB8AF,#7FC7AF,#DAD8A7}; 
 
+OpenSimplexNoise noise = new OpenSimplexNoise();
+
+
 void setup() {
-  size(600, 600);
-  smooth();
-  noiseDetail(2);
+  size(400, 400);
+  //smooth();
+  //noiseDetail(2);
   //frameRate(5);
 }
 
@@ -19,7 +22,7 @@ void draw() {
 void backnoise() {
   loadPixels();
 
-  float step = 0.007;
+  float step = 0.01;
   float xstep = step;
   float ystep = step;
 
@@ -28,17 +31,18 @@ void backnoise() {
     float yoff = 0;
     for (int y = 0; y < height; y++) {
       int index = x + y*width;
-      float n = noise(xoff+zoff, yoff, zoff);
+      //float n = noise(xoff+zoff, yoff, zoff);
+      float n = (float) noise.eval(xoff, yoff, zoff);
       //float value = (sin(n) + 1)*0.5*255;
       float value = n*255;
       color c = color(value, 0, 0);
-      if (value < 80) {
+      if (value < 5) {
         c = colors[0];
-      } else if (value < 100) {
+      } else if (value < 30) {
         c = colors[1];
-      } else if (value < 130) {
+      } else if (value < 80) {
         c = colors[2];
-      } else if (value < 200) {
+      } else if (value < 150) {
         c = colors[3];
       } else {
         c = colors[4];
